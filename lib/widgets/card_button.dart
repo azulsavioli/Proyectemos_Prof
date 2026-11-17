@@ -13,7 +13,7 @@ class CardButton extends StatelessWidget {
   final double iconSize;
 
   const CardButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.cardWidth,
     required this.cardHeight,
@@ -22,7 +22,7 @@ class CardButton extends StatelessWidget {
     required this.icon,
     required this.shadowColor,
     required this.iconSize,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

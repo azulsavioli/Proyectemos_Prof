@@ -6,7 +6,7 @@ import '../providers/google_sign_in_provider.dart';
 import '../services/auth_services.dart';
 
 class DrawerMenuWidget extends StatelessWidget {
-  DrawerMenuWidget({Key? key}) : super(key: key);
+  DrawerMenuWidget({super.key});
   final authService = AuthService();
 
   @override

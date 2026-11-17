@@ -3,12 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../app/home/home_page.dart';
+import '../app/src/presentation/home/home_page.dart';
 import '../providers/google_sign_in_provider.dart';
-import '../app/login/login_page.dart';
+import '../app/src/presentation/login/login_page.dart';
 
 class AuthCheck extends StatefulWidget {
-  const AuthCheck({Key? key}) : super(key: key);
+  const AuthCheck({super.key});
 
   @override
   State<AuthCheck> createState() => _AuthCheckState();

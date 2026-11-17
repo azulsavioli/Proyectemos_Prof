@@ -8,10 +8,10 @@ class CustomCarousel extends StatelessWidget {
   final List<String> imgNameList;
 
   const CustomCarousel({
-    Key? key,
+    super.key,
     required this.imgList,
     required this.imgNameList,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

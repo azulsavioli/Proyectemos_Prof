@@ -17,15 +17,15 @@ class CustomStepInheritedWidget extends InheritedWidget {
   final Color buttonCameraColor;
 
   const CustomStepInheritedWidget({
-    Key? key,
-    required Widget child,
+    super.key,
+    required super.child,
     required this.buttonFileSelected,
     required this.buttonCameraSelected,
     required this.buttonFileIcon,
     required this.buttonCameraIcon,
     required this.buttonFileColor,
     required this.buttonCameraColor,
-  }) : super(key: key, child: child);
+  });
 
   static CustomStepInheritedWidget? of(BuildContext context) {
     return context
@@ -50,12 +50,12 @@ class CustomStep extends StatefulWidget {
   final TextEditingController controller;
 
   const CustomStep({
-    Key? key,
+    super.key,
     required this.title,
     required this.currentStep,
     required this.stepIndex,
     required this.controller,
-  }) : super(key: key);
+  });
 
   static List<XFile> images = [];
 
@@ -120,8 +120,7 @@ class _CustomStepState extends State<CustomStep> {
                 Expanded(
                   child: ElevatedButton.icon(
                     style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(buttonFileColor),
+                      backgroundColor: WidgetStateProperty.all(buttonFileColor),
                     ),
                     onPressed: () async {
                       final image = await pickImage(

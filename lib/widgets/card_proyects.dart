@@ -10,7 +10,7 @@ class CardProyecto extends StatelessWidget {
   final TextStyle descriptionColor;
 
   const CardProyecto({
-    Key? key,
+    super.key,
     required this.backgroundColor,
     required this.title,
     required this.titleColor,
@@ -18,7 +18,7 @@ class CardProyecto extends StatelessWidget {
     required this.descriptionColor,
     required this.image,
     required this.namedRoute,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

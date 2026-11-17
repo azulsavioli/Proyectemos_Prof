@@ -23,8 +23,8 @@ class CustomButtonIconRight extends StatelessWidget {
       height: 50,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(backgroundButtonColor),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          backgroundColor: WidgetStateProperty.all(backgroundButtonColor),
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
@@ -52,7 +52,8 @@ class CustomButtonIconRight extends StatelessWidget {
                     child: Text(
                       buttonText,
                       style: TextStyle(
-                        fontSize: ScreenUtil().setSp(14),
+                        color: Colors.white,
+                        fontSize: ScreenUtil().setSp(4),
                       ),
                     ),
                   ),

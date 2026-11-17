@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:proyectemos_prof/commons/styles.dart';
 
-import '../../commons/strings.dart';
+import '../../../../commons/strings.dart';
 import 'login_controller.dart';
 
 class LoginPage extends StatefulWidget {
@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
         body: Row(
           children: [
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Padding(
                 padding: const EdgeInsets.all(40),
                 child: Column(
@@ -33,20 +33,23 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Text(
                       '¡Bienvenidos a Proyectemos!',
-                      style: ThemeText.h2title35yellow,
+                      style: ThemeText.paragraph14YellowBold,
+                    ),
+                    const SizedBox(
+                      height: 10,
                     ),
                     Text(
                       Strings.descriptionLogin,
-                      style: ThemeText.paragraph14Gray,
+                      style: ThemeText.paragraph6Gray,
                     ),
                     SizedBox(
                       height: 60,
                       child: ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(ThemeColors.yellow),
+                              WidgetStateProperty.all(ThemeColors.yellow),
                           shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                              WidgetStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
@@ -78,14 +81,15 @@ class _LoginPageState extends State<LoginPage> {
                               : [
                                   const FaIcon(
                                     FontAwesomeIcons.google,
+                                    color: ThemeColors.white,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8),
                                     child: Text(
                                       Strings.iniciaSessao,
                                       style: TextStyle(
-                                        fontSize: ScreenUtil().setSp(14),
-                                      ),
+                                          fontSize: ScreenUtil().setSp(6),
+                                          color: ThemeColors.white),
                                     ),
                                   )
                                 ],
@@ -94,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Text(
                       Strings.capesDescription,
-                      style: ThemeText.paragraph12gray,
+                      style: ThemeText.paragraph4Gray,
                     ),
                   ],
                 ),

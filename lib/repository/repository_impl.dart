@@ -1,107 +1,96 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-
+import 'package:flutter/material.dart';
 import '../services/auth_services.dart';
 
 class RepositoryImpl extends ChangeNotifier {
   AuthService authService = AuthService();
 
-  Future<void> saveSchoolName<T>(Map<String, dynamic> schoolName) async {
-    final schoolsRef = FirebaseFirestore.instance.collection('escolas/');
-    try {
-      await schoolsRef.add(schoolName);
-    } on Exception catch (e) {
-      e.toString();
-    }
-    notifyListeners();
-  }
-
-  Future<String> getSchoolId(String schoolNameParams) async {
+  // Obtém ou cria uma nova escola e retorna o ID da escola
+  Future<String> getOrCreateSchoolId(String schoolName) async {
     final schoolsRef = FirebaseFirestore.instance.collection('escolas');
-    String schoolId = '';
 
     try {
-      await schoolsRef.get().then((QuerySnapshot querySnapshot) {
-        for (final doc in querySnapshot.docs) {
-          final schoolName = doc.data();
-          if (schoolName == null) return;
-          if ((schoolName as Map)['schoolName'] == schoolNameParams) {
-            schoolId = doc.id.toString();
-          }
-        }
-      });
-    } catch (error) {
-      error.toString();
+      final querySnapshot =
+          await schoolsRef.where('schoolName', isEqualTo: schoolName).get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        return querySnapshot.docs.first.id;
+      } else {
+        final docRef = await schoolsRef.add({'schoolName': schoolName});
+        return docRef.id;
+      }
+    } catch (e) {
+      print('Erro ao obter ou criar ID da escola: $e');
+      return '';
     }
-    return schoolId;
   }
 
-  Future<void> saveClassRoomInfo<T>(
-    String schoolName,
-    Map<String, dynamic> classRoomInfo,
-  ) async {
-    final schoolId = await getSchoolId(schoolName);
+  // Obtém ou cria uma nova turma e retorna o ID da turma
+  Future<String> getOrCreateClassRoomId(
+      String schoolName, String classRoom) async {
+    final schoolId = await getOrCreateSchoolId(schoolName);
+    if (schoolId.isEmpty) return '';
 
     final classRoomRef = FirebaseFirestore.instance
-        .collection('escolas/')
-        .doc('$schoolId/')
-        .collection('turmas/');
-
-    try {
-      await classRoomRef.add(classRoomInfo);
-    } on Exception catch (e) {
-      e.toString();
-    }
-    notifyListeners();
-  }
-
-  Future<String> getClassRoomId(String schoolId, String classNameParams) async {
-    final classRoomRef = FirebaseFirestore.instance
-        .collection('escolas/')
-        .doc('$schoolId/')
+        .collection('escolas')
+        .doc(schoolId)
         .collection('turmas');
-    String classRoomId = '';
 
     try {
-      await classRoomRef.get().then((QuerySnapshot querySnapshot) {
-        for (final doc in querySnapshot.docs) {
-          final className = doc.data();
-          if (className == null) return;
-          if ((className as Map)['classRoom'] == classNameParams) {
-            classRoomId = doc.id.toString();
-            break;
-          }
-        }
-      });
-    } catch (error) {
-      error.toString();
+      final querySnapshot =
+          await classRoomRef.where('classRoom', isEqualTo: classRoom).get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        return querySnapshot.docs.first.id;
+      } else {
+        final docRef = await classRoomRef.add({'classRoom': classRoom});
+        return docRef.id;
+      }
+    } catch (e) {
+      print('Erro ao obter ou criar ID da turma: $e');
+      return '';
     }
-    return classRoomId;
   }
 
-  Future<void> saveTeacherEmail<T>(
-    String schoolName,
-    String classRoomName,
-    Map<String, dynamic> teacherEmail,
-  ) async {
-    final schoolId = await getSchoolId(schoolName);
-    final classRoomId = await getClassRoomId(schoolId, classRoomName);
+  // Salva ou atualiza as informações da turma
+  Future<void> saveClassRoomInfo(String schoolName, String classRoom,
+      Map<String, dynamic> classRoomInfo) async {
+    final classRoomId = await getOrCreateClassRoomId(schoolName, classRoom);
+    if (classRoomId.isEmpty) return;
 
-    if (schoolId.isEmpty || classRoomId.isEmpty) {
-      return;
+    final classRoomRef = FirebaseFirestore.instance
+        .collection('escolas')
+        .doc(await getOrCreateSchoolId(schoolName))
+        .collection('turmas')
+        .doc(classRoomId);
+
+    try {
+      await classRoomRef.set(classRoomInfo);
+      notifyListeners();
+    } catch (e) {
+      print('Erro ao salvar informações da turma: $e');
     }
+  }
+
+  Future<void> saveTeacherInfo(String schoolName, String classRoom,
+      Map<String, dynamic> teacherInfo) async {
+    final classRoomId = await getOrCreateClassRoomId(schoolName, classRoom);
+    if (classRoomId.isEmpty) return;
 
     final teacherRef = FirebaseFirestore.instance
         .collection('escolas')
-        .doc(schoolId)
+        .doc(await getOrCreateSchoolId(schoolName))
         .collection('turmas')
         .doc(classRoomId)
-        .collection('professore');
+        .collection('professores');
+
     try {
-      await teacherRef.add(teacherEmail);
-    } on Exception catch (e) {
-      e.toString();
+      await teacherRef.add(teacherInfo);
+      notifyListeners();
+    } catch (e) {
+      print('Erro ao salvar informações do professor: $e');
     }
-    notifyListeners();
   }
 }
+
+

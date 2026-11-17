@@ -10,12 +10,12 @@ class CustomTextFormField extends StatelessWidget {
   final bool isEmail;
 
   const CustomTextFormField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.hint,
     required this.keyboardType,
     required this.isEmail,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class CustomTextFormField extends StatelessWidget {
           padding: const EdgeInsets.only(left: 8),
           child: Text(
             hint,
-            style: ThemeText.paragraph16GrayLight,
+            style: ThemeText.paragraph4GrayBold,
           ),
         ),
       ),
@@ -50,7 +50,8 @@ class CustomTextFormField extends StatelessWidget {
             if (resposta.length < 10) {
               return 'Su respuesta debe tener al menos 10 caracteres';
             }
-            if (!resposta.contains(RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$'))) {
+            if (!resposta
+                .contains(RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$'))) {
               return 'Ingrese un corro eletronico valido';
             }
           }

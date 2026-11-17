@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:proyectemos_prof/app/registration/registration_controller.dart';
+import 'package:proyectemos_prof/app/src/presentation/registration/registration_controller.dart';
 import 'package:proyectemos_prof/widgets/custom_text_form_field.dart';
 
-import '../../commons/styles.dart';
-import '../../widgets/custom_button_icon_right.dart';
+import '../../../../commons/styles.dart';
+import '../../../../widgets/custom_button_icon_right.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -13,7 +13,6 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
-
   final school = TextEditingController();
   final serie = TextEditingController();
   final classRoom = TextEditingController();
@@ -35,10 +34,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Cadastro de turmas',
-              style: ThemeText.h3title20yellow
-            ),
+            Text('Cadastro de turmas', style: ThemeText.paragraph8yellowBold),
             SizedBox(
               width: MediaQuery.of(context).size.width / 3,
               child: Column(
@@ -52,7 +48,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       children: <Widget>[
                         Text(
                           'Qual su nombre',
-                          style: ThemeText.paragraph14Gray,
+                          style: ThemeText.paragraph4Gray,
                         ),
                         const SizedBox(
                           height: 10,
@@ -68,7 +64,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                         Text(
                           'Agregar escuela',
-                          style: ThemeText.paragraph14Gray,
+                          style: ThemeText.paragraph4Gray,
                         ),
                         const SizedBox(
                           height: 10,
@@ -84,7 +80,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                         Text(
                           'Agregar a classe',
-                          style: ThemeText.paragraph14Gray,
+                          style: ThemeText.paragraph4Gray,
                         ),
                         const SizedBox(
                           height: 10,
@@ -100,7 +96,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                         Text(
                           'Agregue el correo electrónico que recibirá las tareas y que sus estudiantes puedan contactar',
-                          style: ThemeText.paragraph14Gray,
+                          style: ThemeText.paragraph4Gray,
                         ),
                         const SizedBox(
                           height: 10,
@@ -116,7 +112,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                         CustomButtonIconRight(
                           isLoading: isLoading,
-                          onPressed: () {
+                          onPressed: () async {
                             if (formKey.currentState!.validate()) {
                               _controller
                                 ..saveSchoolName(
@@ -124,20 +120,30 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 )
                                 ..saveClassRoomName(
                                   school.text,
+                                  classRoom.text,
                                   {'classRoom': classRoom.text},
                                 )
-                                ..saveTeacherEmail(
+                                ..saveTeacherInfo(
                                   school.text,
                                   classRoom.text,
-                                  {'teacherName': teacherName.text},
-                                  {'teacherEmail': teacherEmail.text},
-                                ).then(
+                                  {
+                                    'teacherName': teacherName.text,
+                                    'teacherEmail': teacherEmail.text
+                                  },
+                                )
+                                    // ..saveTeacherEmail(
+                                    //   school.text,
+                                    //   classRoom.text,
+                                    //   {'teacherEmail': teacherEmail.text},
+                                    // )
+                                    .then(
                                   (_) => Navigator.pushNamed(context, '/home'),
                                 );
                             }
                           },
-                          backgroundButtonColor: ThemeColors.blue,
-                          icon: const Icon(Icons.arrow_forward_ios),
+                          backgroundButtonColor: ThemeColors.yellow,
+                          icon: const Icon(Icons.arrow_forward_ios,
+                              color: Colors.white),
                           buttonText: 'Guardar',
                         ),
                         // Add TextFormFields and ElevatedButton here.

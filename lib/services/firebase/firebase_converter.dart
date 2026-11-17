@@ -12,13 +12,13 @@ class FirebaseConverter {
   ) async {
     final firebaseStorage = FirebaseStorage.instance;
     final firebasePaths = [];
-    var counter = 0;
+    var _counter = 0;
 
     try {
       for (final item in filePaths) {
         if (filePaths.isEmpty) return;
         final file = File(item);
-        counter++;
+        _counter++;
 
         final snapshot = await firebaseStorage
             .ref()

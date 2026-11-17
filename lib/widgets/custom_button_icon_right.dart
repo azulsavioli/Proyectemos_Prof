@@ -1,13 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:material_ui/material_ui.dart';
+
+import '../commons/styles.dart';
 
 class CustomButtonIconRight extends StatelessWidget {
-  final bool isLoading;
-  final onPressed;
-  final Color backgroundButtonColor;
-  final icon;
-  final String buttonText;
-
   const CustomButtonIconRight({
     super.key,
     required this.isLoading,
@@ -17,49 +12,44 @@ class CustomButtonIconRight extends StatelessWidget {
     required this.buttonText,
   });
 
+  final bool isLoading;
+  final VoidCallback? onPressed;
+  final Color backgroundButtonColor;
+  final Icon icon;
+  final String buttonText;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(backgroundButtonColor),
-          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
+      height: 52,
+      width: double.infinity,
+      child: FilledButton(
+        style: FilledButton.styleFrom(
+          backgroundColor: backgroundButtonColor,
+          disabledBackgroundColor: backgroundButtonColor.withValues(alpha: 0.6),
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
           ),
         ),
-        onPressed: onPressed,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: isLoading
-              ? [
-                  const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: SizedBox(
-                      width: 22,
-                      height: 22,
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
-                ]
-              : [
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Text(
-                      buttonText,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: ScreenUtil().setSp(4),
-                      ),
-                    ),
-                  ),
+        onPressed: isLoading ? null : onPressed,
+        child: isLoading
+            ? const SizedBox(
+                width: 22,
+                height: 22,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.4,
+                  color: Colors.white,
+                ),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(buttonText, style: ThemeText.button),
+                  const SizedBox(width: 8),
                   icon,
                 ],
-        ),
+              ),
       ),
     );
   }

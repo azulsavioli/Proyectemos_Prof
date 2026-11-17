@@ -1,63 +1,36 @@
-import 'package:flutter/material.dart';
-
-import '../../../commons/styles.dart';
+import 'package:material_ui/material_ui.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  final TextEditingController controller;
-  final String hint;
-  final TextInputType keyboardType;
-
-  final bool isEmail;
-
   const CustomTextFormField({
     super.key,
     required this.controller,
-    required this.hint,
-    required this.keyboardType,
-    required this.isEmail,
+    required this.label,
+    this.keyboardType,
+    this.validator,
+    this.textInputAction,
+    this.onFieldSubmitted,
+    this.autofillHints,
   });
+
+  final TextEditingController controller;
+  final String label;
+  final TextInputType? keyboardType;
+  final String? Function(String?)? validator;
+  final TextInputAction? textInputAction;
+  final ValueChanged<String>? onFieldSubmitted;
+  final Iterable<String>? autofillHints;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      autofocus: true,
-      maxLines: null,
       controller: controller,
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-        ),
-        label: Padding(
-          padding: const EdgeInsets.only(left: 8),
-          child: Text(
-            hint,
-            style: ThemeText.paragraph4GrayBold,
-          ),
-        ),
-      ),
       keyboardType: keyboardType,
-      validator: (resposta) {
-        {
-          if (resposta!.isEmpty) {
-            return 'Ingrese tuja respuesta correctamente';
-          }
-          if (resposta.length < 3) {
-            return 'Su respuesta debe tener al menos 10 caracteres';
-          }
-          if (isEmail) {
-            if (resposta.length < 10) {
-              return 'Su respuesta debe tener al menos 10 caracteres';
-            }
-            if (!resposta
-                .contains(RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$'))) {
-              return 'Ingrese un corro eletronico valido';
-            }
-          }
-          return null;
-        }
-      },
+      textInputAction: textInputAction,
+      onFieldSubmitted: onFieldSubmitted,
+      autofillHints: autofillHints,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: validator,
+      decoration: InputDecoration(labelText: label),
     );
   }
 }

@@ -1,79 +1,27 @@
-abstract class Strings {
-// ProyectosPage
-
-  //Images
-  static const String logo = 'assets/images/logo.png';
-  static const String imageUno = 'assets/images/uno_img.png';
-  static const String imageDos = 'assets/images/dos_img.png';
-  static const String imageTres = 'assets/images/tres_img.png';
-  static const String proyectoUno = 'assets/images/proyecto_uno.png';
-  static const String proyectoDos = 'assets/images/proyecto_dos.png';
-  static const String proyectoTres = 'assets/images/proyecto_tres.png';
+abstract final class Strings {
   static const String loginImage = 'assets/images/login_img.png';
+  static const String logo = 'assets/images/icon_logo.png';
 
-  //Strings
-  static const String title = '¡Proyectos!';
+  static const String bemvindos = '¡Bienvenidos a Proyectemos!';
+  static const String descriptionLogin =
+      'Painel para os professores acompanharem escolas, turmas e os três projetos de língua espanhola.';
+  static const String googleHint =
+      'Entre com a conta Google usada nas turmas. O botão abaixo é o do Google.';
+  static const String capesDescription =
+      'O presente trabalho foi realizado com apoio da Coordenação de Aperfeiçoamento de Pessoal de Nível Superior - Brasil (CAPES) - Código de Financiamento 001';
+
   static const String titleCardUno = 'Proyecto UNO';
   static const String titleCardDos = 'Proyecto DOS';
   static const String titleCardTres = 'Proyecto TRES';
-
-  //Onboarding
-  static const String descriptionLogin =
-      '''Esta aplicación ha sido pensada como un lugar para auxiliar los profesores(as).''';
-
-  static const String descriptionOnboarding2 =
-      '''Con la finalidad de poner la lengua española más cerca de tus intereses y realidad, esta aplicación está dividida en 3 grandes proyectos: proyecto UNO, proyecto DOS y proyecto TRÉS.''';
-
-  static const String descriptionOnboarding3 =
-      '¡Deseamos que los momentos en la aplicación !PROYECTEMOS! sean una experiencia significativa y transformadora!';
-
-  //Feedbacks
-  static const String tareaConcluida = 'Tarea concluída com sucesso!';
-
-  //Login
-  static const String bemvindos = '!Bienvenidos a Proyectemos!';
-  static const String descricaoAppLogin =
-      '''Un diálogo entre libros didácticos y una aplicación móvil en las clases de lengua española.''';
-  static const String iniciaSessao = 'Inicia sesión con tu cuenta de Google';
-  static const String capesDescription = '''
-O presente trabalho foi realizado com apoio da Coordenação de Aperfeiçoamento de Pessoal de Nível Superior - Brasil (CAPES) - Código de Financiamento 001''';
-
-  //Latinoamerica
-  static const String titleLatinoamericaUno = 'Latinoamérica';
-  static const String titleLatinoamericaUnoFeed = 'Latinoamérica Feed';
-  static const String titleLatinoamericaUnoFeedback = 'Latinoamérica Feedback';
-  static const String feedbackTareaUno = 'Feedback Latinoamerica\nTarea uno';
-  static const String feedbackTareaDos = 'Feedback Latinoamerica\nTarea dos';
-  static const String feedbackTareaTres = 'Feedback Latinoamerica\nTarea tres';
-
-  //Artistas
-  static const String titleArtistasHispanoamericanos =
-      'Artistas hispanoamericanos';
-  static const String titleArtistasHispanoamericanosUno =
-      'Feedback Tarea Uno Artistas hispanoamericanos';
-  static const String titleArtistasHispanoamericanosDos =
-      'Feedback Tarea Dos Artistas hispanoamericanos';
-
-  //Evento cultural
-  static const String titleEventoCulturalUno = 'Evento Cultural';
-  static const String titleEventoCulturalUnoFeed = 'Feedback Evento Cultural';
-
-  static const String titlePropuestadeEventoUno = 'La propuesta del evento';
-  static const String titleFeedbackEventoUno = 'Feedback';
-
-  //Divulgacion
-  static const String titleDivulgacionUno = 'Divulgación';
-  static const String titleDivulgacionUnoFeed = 'Divulgación Feed';
-
-  //Paginas
-  static const String titleAgendaPage = 'Agenda';
-  static const String titleTarefasCumpridasPage = 'Tarefas Cumplidas';
-  static const String titleTarefasPendentesPage = 'Tarefas Pendientes';
-  static const String titleTutorialesPage = 'Tutoriales';
-
   static const String descriptionCardUno =
       'Creación y divulgación de un evento cultural.';
   static const String descriptionCardDos = 'Elaboración de un podcast.';
   static const String descriptionCardTres =
       'Creación de una campaña social en las redes sociales.';
+
+  /// Única rede social do painel. O código anterior não tinha URL;
+  /// este é o Instagram institucional da UFSC, casa do projeto.
+  /// Troque somente esta constante se o perfil do ¡Proyectemos! for outro.
+  static const String instagramUrl = 'https://www.instagram.com/universidadeufsc/';
+  static const String instagramLabel = 'Instagram';
 }

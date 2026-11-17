@@ -1,64 +1,52 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+
+import '../commons/styles.dart';
 
 class CardProyecto extends StatelessWidget {
-  final String namedRoute;
-  final String image;
-  final Color backgroundColor;
-  final String title;
-  final TextStyle titleColor;
-  final String description;
-  final TextStyle descriptionColor;
-
   const CardProyecto({
     super.key,
-    required this.backgroundColor,
     required this.title,
-    required this.titleColor,
     required this.description,
-    required this.descriptionColor,
-    required this.image,
-    required this.namedRoute,
+    required this.accent,
+    required this.onTap,
   });
+
+  final String title;
+  final String description;
+  final Color accent;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(namedRoute);
-      },
-      child: Card(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * .9,
-          height: MediaQuery.of(context).size.height * .23,
-          child: Center(
-            child: Row(
-              children: [
-                Image.asset(
-                  image,
-                  height: 120,
-                  width: 120,
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Container(
+                width: 8,
+                height: 72,
+                decoration: BoxDecoration(
+                  color: accent,
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      title,
-                      style: titleColor,
-                    ),
-                    const SizedBox(
-                      height: 14,
-                    ),
-                    SizedBox(
-                      width: 160,
-                      child: Text(
-                        description,
-                        style: descriptionColor,
-                      ),
-                    ),
+                    Text(title, style: ThemeText.label.copyWith(fontSize: 16)),
+                    const SizedBox(height: 6),
+                    Text(description, style: ThemeText.body),
                   ],
-                )
-              ],
-            ),
+                ),
+              ),
+              const Icon(Icons.chevron_right, color: ThemeColors.grayLight),
+            ],
           ),
         ),
       ),

@@ -1,159 +1,151 @@
-import 'package:flutter/material.dart';
-import 'package:proyectemos_prof/app/src/presentation/registration/registration_controller.dart';
-import 'package:proyectemos_prof/widgets/custom_text_form_field.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../commons/styles.dart';
+import '../../../../commons/validators.dart';
+import '../../../../repository/repository_impl.dart';
 import '../../../../widgets/custom_button_icon_right.dart';
+import '../../../../widgets/custom_text_form_field.dart';
+import 'registration_controller.dart';
 
 class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({super.key});
+  const RegistrationPage({super.key, this.controller});
+
+  final RegistrationController? controller;
 
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
-  final school = TextEditingController();
-  final serie = TextEditingController();
-  final classRoom = TextEditingController();
-  final teacherName = TextEditingController();
-  final teacherEmail = TextEditingController();
-  final _controller = RegistrationController();
+  final _formKey = GlobalKey<FormState>();
+  final _teacherName = TextEditingController();
+  final _school = TextEditingController();
+  final _classRoom = TextEditingController();
+  final _teacherEmail = TextEditingController();
+  late final RegistrationController _controller =
+      widget.controller ?? RegistrationController();
+
+  bool _saving = false;
+
+  @override
+  void dispose() {
+    _teacherName.dispose();
+    _school.dispose();
+    _classRoom.dispose();
+    _teacherEmail.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    setState(() => _saving = true);
+    try {
+      await _controller.saveTeacher(
+        teacherName: _teacherName.text,
+        schoolName: _school.text,
+        classRoom: _classRoom.text,
+        teacherEmail: _teacherEmail.text,
+      );
+      if (!mounted) {
+        return;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Turma salva.')),
+      );
+      if (Navigator.of(context).canPop()) {
+        Navigator.of(context).pop(true);
+      } else {
+        await Navigator.of(context).pushReplacementNamed('/');
+      }
+    } on RepositoryException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.message)),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _saving = false);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // var screenSize = MediaQuery.of(context).size;
-    const isLoading = false;
-
-    final formKey = GlobalKey<FormState>();
-    return Card(
-      shadowColor: ThemeColors.gray,
-      elevation: 3,
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Cadastro de turmas', style: ThemeText.paragraph8yellowBold),
-            SizedBox(
-              width: MediaQuery.of(context).size.width / 3,
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Form(
-                    key: formKey,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Cadastro de turma'),
+      ),
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 560),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Form(
+                    key: _formKey,
                     child: Column(
-                      children: <Widget>[
-                        Text(
-                          'Qual su nombre',
-                          style: ThemeText.paragraph4Gray,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Text('Dados da turma', style: ThemeText.title),
+                        const SizedBox(height: 8),
+                        const Text(
+                          'A escola é reaproveitada se o nome já existir. O mesmo vale para a turma.',
+                          style: ThemeText.body,
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 20),
                         CustomTextFormField(
-                          hint: 'Nombre',
-                          controller: teacherName,
-                          keyboardType: TextInputType.text,
-                          isEmail: false,
+                          controller: _teacherName,
+                          label: 'Nome do professor',
+                          textInputAction: TextInputAction.next,
+                          autofillHints: const [AutofillHints.name],
+                          validator: validateRequired,
                         ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          'Agregar escuela',
-                          style: ThemeText.paragraph4Gray,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 14),
                         CustomTextFormField(
-                          hint: 'Escuola',
-                          controller: school,
-                          keyboardType: TextInputType.text,
-                          isEmail: false,
+                          controller: _school,
+                          label: 'Escola',
+                          textInputAction: TextInputAction.next,
+                          validator: validateRequired,
                         ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          'Agregar a classe',
-                          style: ThemeText.paragraph4Gray,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 14),
                         CustomTextFormField(
-                          hint: 'Classe',
-                          controller: classRoom,
-                          keyboardType: TextInputType.text,
-                          isEmail: false,
+                          controller: _classRoom,
+                          label: 'Turma',
+                          textInputAction: TextInputAction.next,
+                          validator: validateRequired,
                         ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          'Agregue el correo electrónico que recibirá las tareas y que sus estudiantes puedan contactar',
-                          style: ThemeText.paragraph4Gray,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 14),
                         CustomTextFormField(
-                          hint: 'Email',
-                          controller: teacherEmail,
-                          keyboardType: TextInputType.text,
-                          isEmail: true,
+                          controller: _teacherEmail,
+                          label: 'E-mail de contato',
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.done,
+                          autofillHints: const [AutofillHints.email],
+                          onFieldSubmitted: (_) => _submit(),
+                          validator: validateEmail,
                         ),
-                        const SizedBox(
-                          height: 25,
-                        ),
+                        const SizedBox(height: 24),
                         CustomButtonIconRight(
-                          isLoading: isLoading,
-                          onPressed: () async {
-                            if (formKey.currentState!.validate()) {
-                              _controller
-                                ..saveSchoolName(
-                                  {'schoolName': school.text},
-                                )
-                                ..saveClassRoomName(
-                                  school.text,
-                                  classRoom.text,
-                                  {'classRoom': classRoom.text},
-                                )
-                                ..saveTeacherInfo(
-                                  school.text,
-                                  classRoom.text,
-                                  {
-                                    'teacherName': teacherName.text,
-                                    'teacherEmail': teacherEmail.text
-                                  },
-                                )
-                                    // ..saveTeacherEmail(
-                                    //   school.text,
-                                    //   classRoom.text,
-                                    //   {'teacherEmail': teacherEmail.text},
-                                    // )
-                                    .then(
-                                  (_) => Navigator.pushNamed(context, '/home'),
-                                );
-                            }
-                          },
+                          isLoading: _saving,
+                          onPressed: _submit,
                           backgroundButtonColor: ThemeColors.yellow,
-                          icon: const Icon(Icons.arrow_forward_ios,
-                              color: Colors.white),
-                          buttonText: 'Guardar',
+                          icon: const Icon(Icons.arrow_forward, color: Colors.white),
+                          buttonText: 'Salvar',
                         ),
-                        // Add TextFormFields and ElevatedButton here.
                       ],
                     ),
                   ),
-                ],
+                ),
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

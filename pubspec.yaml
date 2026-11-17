@@ -1,78 +1,37 @@
 name: proyectemos_prof
-description: A project for teachers
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+description: Painel web do professor para o aplicativo ¡Proyectemos!.
+publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.1.0+2
 
 environment:
-  sdk: '>=3.0.6 <4.0.0'
+  sdk: ^3.13.0
 
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
 
-  cupertino_icons: ^1.0.2
-  
-  #Google icon
-  font_awesome_flutter: ^10.1.0
+  font_awesome_flutter: ^11.0.0
 
-  #Firebase
-  firebase_core: ^2.14.0
-  cloud_firestore: ^4.8.2
+  firebase_core: ^5.2.0
+  firebase_auth: ^7.1.0
+  cloud_firestore: ^7.2.0
 
-  #Responsividade
-  flutter_screenutil: ^5.7.0
+  google_sign_in: ^7.2.0
+  google_sign_in_web: ^1.1.0
 
-  #Authentication
-  firebase_auth: 
-  google_sign_in: ^6.1.4
-
-  #State management 
-  provider: ^6.0.5
-  path_provider: ^2.0.11
-  flutter_bloc: ^8.1.5
-  get_it: ^7.7.0
-  dartz: ^0.10.1
-  dio: ^5.4.3+1
-  json_annotation: ^4.9.0
-  equatable: ^2.0.5
-  
-  #Search Bar
-  anim_search_bar: ^2.0.3
-  
-  #Data
-  shared_preferences: ^2.0.15
-  firebase_storage: 
-
-  carousel_slider: ^4.2.1
-
-  fl_chart: ^0.68.0
-
-  flutter_side_menu: ^0.5.3
-  easy_sidemenu: ^0.6.0
-
-  #Picker
-  image_picker: ^1.0.0
-  file_picker: ^8.0.3
-  image: ^4.0.17
-
-  #Toast
-  fluttertoast: ^8.0.9
-
-  #Email
-  mailer: ^6.0.1
+  provider: ^6.1.5
+  url_launcher: ^6.3.2
+  material_ui: ^1.11.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  json_serializable: ^6.8.0
-  flutter_lints: ^4.0.0
-    #Lint
-  flutterando_analysis: ^0.0.2
+  flutter_lints: ^6.0.0
 
 flutter:
-
   uses-material-design: true
 
   assets:
@@ -81,22 +40,22 @@ flutter:
   fonts:
     - family: Poppins
       fonts:
+        - asset: assets/fonts/Poppins-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Poppins-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
         - asset: assets/fonts/Poppins-Bold.ttf
           weight: 700
-        - asset: assets/fonts/Poppins-Medium.ttf
-          weight: 600
-        - asset: assets/fonts/Poppins-Regular.ttf
-          weight: 500
-        - asset: assets/fonts/Poppins-Light.ttf
-          weight: 400
 
-    - family: Montserrat  
+    - family: Montserrat
       fonts:
+        - asset: assets/fonts/Montserrat-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Montserrat-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Montserrat-Medium.ttf
+          weight: 500
         - asset: assets/fonts/Montserrat-Bold.ttf
           weight: 700
-        - asset: assets/fonts/Montserrat-Medium.ttf
-          weight: 600
-        - asset: assets/fonts/Montserrat-Regular.ttf
-          weight: 500
-        - asset: assets/fonts/Montserrat-Light.ttf
-          weight: 400
